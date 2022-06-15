@@ -1,7 +1,6 @@
 package com.example.breakingbadapp
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,7 @@ import com.example.breakingbadapp.Model.CharacterModelItem
 import com.example.breakingbadapp.databinding.CharecterItemBinding
 import com.example.breakingbadapp.ui.FirstFragmentDirections
 
-class BreakingBadAdapter(val character: List<CharacterModelItem>) :
+class BreakingBadAdapter(var character: List<CharacterModelItem>) :
     RecyclerView.Adapter<BreakingBadAdapter.CharecterViewHolder>() {
     class CharecterViewHolder(val binding: CharecterItemBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -45,6 +44,11 @@ class BreakingBadAdapter(val character: List<CharacterModelItem>) :
 
     override fun getItemCount(): Int {
         return character.size
+    }
+    fun filtering(newFilteredList: List<CharacterModelItem>) {
+        character =newFilteredList
+        notifyDataSetChanged()
+
     }
 }
 

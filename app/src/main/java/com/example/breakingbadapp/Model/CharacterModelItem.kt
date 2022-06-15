@@ -1,8 +1,11 @@
 package com.example.breakingbadapp.Model
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 data class CharacterModelItem(
     @SerializedName("appearance")
     val appearance: List<Int?>?,
@@ -26,4 +29,4 @@ data class CharacterModelItem(
     val portrayed: String?,
     @SerializedName("status")
     val status: String?
-)
+):Parcelable

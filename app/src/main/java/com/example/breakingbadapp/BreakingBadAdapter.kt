@@ -1,54 +1,79 @@
 package com.example.breakingbadapp
 
+import android.content.Context
+import android.view.KeyCharacterMap.load
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.breakingbadapp.Model.CharacterModelItem
 import com.example.breakingbadapp.databinding.CharecterItemBinding
 import com.example.breakingbadapp.ui.FirstFragmentDirections
+import com.squareup.picasso.Picasso
 
-class BreakingBadAdapter(var character: List<CharacterModelItem>) :
-    RecyclerView.Adapter<BreakingBadAdapter.CharecterViewHolder>() {
-    class CharecterViewHolder(val binding: CharecterItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
+class BreakingBadAdapter : ListAdapter<CharacterModelItem, BreakingBadAdapter.CharecterViewHolder>(DiffCallback) {
+    lateinit var charecter: CharacterModelItem
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharecterViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = CharecterItemBinding.inflate(layoutInflater, parent, false)
-        return CharecterViewHolder(binding)
+        return CharecterViewHolder(
+            CharecterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: CharecterViewHolder, position: Int) {
-        val charecterList = character[position]
-        holder.binding.apply {
-            actorName.text = charecterList.name
-            characterName.text = charecterList.nickname
-            Glide.with(holder.itemView.context)
-                .load(charecterList.img)
-                .into(holder.binding.characterImage);
-
-
-        }
-        holder.binding.root.setOnClickListener {
-            val action = FirstFragmentDirections.actionFirstFragmentToDetailFragment(charecterList)
-            Navigation.findNavController(it).navigate(action)
-        }
-
-
-
+        charecter = getItem(position)
+        holder.bind(charecter)
 
 
     }
 
-    override fun getItemCount(): Int {
-        return character.size
+
+    class CharecterViewHolder(val binding: CharecterItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(character: CharacterModelItem) {
+            binding.characterName.text = character.name
+            binding.actorName.text = character.nickname
+            Picasso.get().load(character.img).into(binding.characterImage)
+            binding.root.setOnClickListener {
+                val action = FirstFragmentDirections.actionFirstFragmentToDetailFragment(character)
+                Navigation.findNavController(it).navigate(action)
+            }
+
+
+        }
+
+
     }
-    fun filtering(newFilteredList: List<CharacterModelItem>) {
-        character =newFilteredList
+
+
+    companion object DiffCallback : DiffUtil.ItemCallback<CharacterModelItem>() {
+        override fun areItemsTheSame(
+            oldItem: CharacterModelItem,
+            newItem: CharacterModelItem
+        ): Boolean {
+            return oldItem.charId == newItem.charId
+        }
+
+        override fun areContentsTheSame(
+            oldItem: CharacterModelItem,
+            newItem: CharacterModelItem
+        ): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+    fun filtering(newFilteredList: CharacterModelItem) {
+        this.charecter = newFilteredList
         notifyDataSetChanged()
 
+
+
+
     }
+
 }
+
 

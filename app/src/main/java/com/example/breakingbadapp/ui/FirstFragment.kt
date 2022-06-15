@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.breakingbadapp.BreakingBadAdapter
 import com.example.breakingbadapp.Model.CharacterModelItem
 import com.example.breakingbadapp.databinding.FragmentFirstBinding
@@ -16,15 +15,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
-    lateinit var badAdapter: BreakingBadAdapter
+    //lateinit var badAdapter: BreakingBadAdapter
+    private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
+
     private val viewModel: BreakingBadViewModel by viewModels()
     lateinit var binding: FragmentFirstBinding
+
     var oldMyNotes = emptyList<CharacterModelItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentFirstBinding.inflate(layoutInflater)
         return binding.root
@@ -34,20 +36,23 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel._breakingList.observe(viewLifecycleOwner) { charecter ->
-            badAdapter = BreakingBadAdapter(charecter)
-            binding.charecterRv.layoutManager = LinearLayoutManager(context)
-            binding.charecterRv.adapter = badAdapter
+            //badAdapter = BreakingBadAdapter(charecter)
+            adapter.submitList(charecter)
+            binding.charecterRv.adapter = adapter
             oldMyNotes = charecter
 
 
         }
+
+
+
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-               filterSearch(newText)
+              filterSearch(newText)
                 return true
             }
 
@@ -62,10 +67,16 @@ class FirstFragment : Fragment() {
             }
 
         }
-        badAdapter.filtering(newFilteredList)
+        adapter.submitList(newFilteredList)
+
+
+
 
 
     }
+
+
+
 
 
 }

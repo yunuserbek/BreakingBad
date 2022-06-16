@@ -15,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
-    //lateinit var badAdapter: BreakingBadAdapter
     private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
 
     private val viewModel: BreakingBadViewModel by viewModels()
@@ -27,7 +26,6 @@ class FirstFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentFirstBinding.inflate(layoutInflater)
         return binding.root
 
@@ -36,13 +34,22 @@ class FirstFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel._breakingList.observe(viewLifecycleOwner) { charecter ->
-            //badAdapter = BreakingBadAdapter(charecter)
             adapter.submitList(charecter)
             binding.charecterRv.adapter = adapter
             oldMyNotes = charecter
-
-
+            binding.countryLoading.visibility = View.GONE
         }
+        viewModel.countryLoading.observe(viewLifecycleOwner){
+            if (it){
+                binding.countryLoading.visibility = View.VISIBLE
+                //binding.charecterRv.visibility =View.GONE
+
+            }else{
+                binding.countryLoading.visibility = View.GONE
+            }
+        }
+
+
 
 
 
@@ -52,7 +59,7 @@ class FirstFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-              filterSearch(newText)
+                filterSearch(newText)
                 return true
             }
 
@@ -61,22 +68,15 @@ class FirstFragment : Fragment() {
 
     private fun filterSearch(newText: String?) {
         val newFilteredList = arrayListOf<CharacterModelItem>()
-        for (i in oldMyNotes){
-            if (i.nickname!!.contains(newText!!)||i.name!!.contains(newText)){
+        for (i in oldMyNotes) {
+            if (i.nickname!!.lowercase().contains(newText!!) || i.name!!.contains(newText)) {
                 newFilteredList.add(i)
             }
-
         }
         adapter.submitList(newFilteredList)
 
 
-
-
-
     }
-
-
-
 
 
 }

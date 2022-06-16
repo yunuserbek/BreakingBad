@@ -10,15 +10,23 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BreakingBadViewModel @Inject constructor(val apiService: BreakingApiService) : ViewModel() {
-
+class BreakingBadViewModel @Inject constructor(
+    val apiService: BreakingApiService,
+    ) : ViewModel() {
     val _breakingList = MutableLiveData<List<CharacterModelItem>>()
-init {
-    getData()
-}
+    val countryLoading = MutableLiveData<Boolean>()
+    init {
+        getData()
+    }
     fun getData() {
+        countryLoading.value = true
         viewModelScope.launch {
             _breakingList.value = apiService.allBrakingBad()
+            countryLoading.value = false
         }
     }
+
 }
+
+
+

@@ -1,22 +1,18 @@
 package com.example.breakingbadapp
 
-import android.content.Context
-import android.view.KeyCharacterMap.load
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.breakingbadapp.Model.CharacterModelItem
 import com.example.breakingbadapp.databinding.CharecterItemBinding
 import com.example.breakingbadapp.ui.FirstFragmentDirections
 import com.squareup.picasso.Picasso
 
-class BreakingBadAdapter : ListAdapter<CharacterModelItem, BreakingBadAdapter.CharecterViewHolder>(DiffCallback) {
-    lateinit var charecter: CharacterModelItem
+class BreakingBadAdapter :
+    ListAdapter<CharacterModelItem, BreakingBadAdapter.CharecterViewHolder>(DiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharecterViewHolder {
         return CharecterViewHolder(
             CharecterItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,9 +20,8 @@ class BreakingBadAdapter : ListAdapter<CharacterModelItem, BreakingBadAdapter.Ch
     }
 
     override fun onBindViewHolder(holder: CharecterViewHolder, position: Int) {
-        charecter = getItem(position)
+        var charecter = getItem(position)
         holder.bind(charecter)
-
 
     }
 
@@ -65,14 +60,7 @@ class BreakingBadAdapter : ListAdapter<CharacterModelItem, BreakingBadAdapter.Ch
         }
 
     }
-    fun filtering(newFilteredList: CharacterModelItem) {
-        this.charecter = newFilteredList
-        notifyDataSetChanged()
 
-
-
-
-    }
 
 }
 

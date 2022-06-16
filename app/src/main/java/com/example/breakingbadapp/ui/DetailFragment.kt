@@ -26,11 +26,12 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.actorName.text = args.charecter.status
+        binding.actorName.text = args.charecter.name
         binding.characterName.text = args.charecter.nickname
         Glide.with(context!!)
             .load(args.charecter.img)
             .into(binding.characterImage);
+
     }
 
 

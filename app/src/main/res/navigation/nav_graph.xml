@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_firstFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_favoriteFragment2"
+            app:destination="@id/favoriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
@@ -23,4 +26,17 @@
             android:name="charecter"
             app:argType="com.example.breakingbadapp.Model.CharacterModelItem" />
     </fragment>
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.breakingbadapp.ui.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <argument
+        android:name="characterId"
+        android:defaultValue="-1"
+        app:argType="integer" />
+    <argument
+        android:name="isFavorite"
+        android:defaultValue="false"
+        app:argType="boolean" />
 </navigation>

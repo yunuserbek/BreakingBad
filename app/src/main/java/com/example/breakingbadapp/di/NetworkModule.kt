@@ -3,6 +3,7 @@ package com.example.breakingbadapp.di
 import android.content.Context
 import androidx.room.Room
 import com.example.breakingbadapp.BreakingApiService
+import com.example.breakingbadapp.CharacterDao
 import com.example.breakingbadapp.utils.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -28,5 +29,17 @@ object NetworkModule {
     @Provides
     fun apiFactory(retrofit: Retrofit) = retrofit.create(BreakingApiService::class.java)
 
+    @Provides
+    @Singleton
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
+        return Room.databaseBuilder(context, AppDatabase::class.java,"DATABASE_NAME")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
+    @Provides
+    @Singleton
+    fun provideDao(
+        db: AppDatabase
+    ): CharacterDao = db.characterDao()
 }

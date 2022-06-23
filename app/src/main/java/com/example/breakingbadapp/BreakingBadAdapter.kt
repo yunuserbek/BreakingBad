@@ -21,6 +21,7 @@ class BreakingBadAdapter :
 
     override fun onBindViewHolder(holder: CharecterViewHolder, position: Int) {
         var charecter = getItem(position)
+
         holder.bind(charecter)
 
     }
@@ -29,6 +30,7 @@ class BreakingBadAdapter :
     class CharecterViewHolder(val binding: CharecterItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(character: CharacterModelItem) {
+
             binding.characterName.text = character.name
             binding.actorName.text = character.nickname
             Picasso.get().load(character.img).into(binding.characterImage)
@@ -36,7 +38,17 @@ class BreakingBadAdapter :
                 val action = FirstFragmentDirections.actionFirstFragmentToDetailFragment(character)
                 Navigation.findNavController(it).navigate(action)
             }
+            val favoriteDrawable = if (character.isFavorite) {
+                R.drawable.ic_baseline_favorite
+            } else {
+                R.drawable.ic_baseline_favorite_border_24
+            }
 
+            binding.iconFavorite.setImageResource(favoriteDrawable)
+            binding.iconFavorite.setOnClickListener {
+                val action = FirstFragmentDirections.actionFirstFragmentToFavoriteFragment2()
+                Navigation.findNavController(it).navigate(action)
+            }
 
         }
 
@@ -44,12 +56,13 @@ class BreakingBadAdapter :
     }
 
 
+
     companion object DiffCallback : DiffUtil.ItemCallback<CharacterModelItem>() {
         override fun areItemsTheSame(
             oldItem: CharacterModelItem,
             newItem: CharacterModelItem
         ): Boolean {
-            return oldItem.charId == newItem.charId
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(

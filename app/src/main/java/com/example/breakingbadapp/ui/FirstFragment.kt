@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,13 +39,14 @@ class FirstFragment : Fragment() {
             binding.charecterRv.adapter = adapter
             oldMyNotes = charecter
             binding.countryLoading.visibility = View.GONE
+
         }
-        viewModel.countryLoading.observe(viewLifecycleOwner){
-            if (it){
+        viewModel.countryLoading.observe(viewLifecycleOwner) {
+            if (it) {
                 binding.countryLoading.visibility = View.VISIBLE
                 //binding.charecterRv.visibility =View.GONE
 
-            }else{
+            } else {
                 binding.countryLoading.visibility = View.GONE
             }
         }
@@ -77,6 +79,8 @@ class FirstFragment : Fragment() {
 
 
     }
+
+
 
 
 }

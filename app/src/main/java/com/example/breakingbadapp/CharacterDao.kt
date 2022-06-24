@@ -8,11 +8,9 @@ interface CharacterDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(character: CharacterModelItem)
 
-    @Update
-    suspend fun update(character: CharacterModelItem)
-
     @Delete
     suspend fun delete(character: CharacterModelItem)
-    @Query("SELECT * from character_model WHERE id = :id")
-    fun getCharacter(id: Int): LiveData<CharacterModelItem>
+
+    @Query("SELECT * FROM character_model")
+    fun getCharacter(): LiveData<List<CharacterModelItem>>
 }

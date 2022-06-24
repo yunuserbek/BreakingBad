@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.breakingbadapp.BreakingBadAdapter
 import com.example.breakingbadapp.Model.CharacterModelItem
 import com.example.breakingbadapp.databinding.FragmentFirstBinding
@@ -16,7 +16,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
-    private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
+    //private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
+    private lateinit var characterAdapter: BreakingBadAdapter
 
     private val viewModel: BreakingBadViewModel by viewModels()
     lateinit var binding: FragmentFirstBinding
@@ -34,13 +35,22 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        characterAdapter = BreakingBadAdapter { article ->
+            val action =
+                FirstFragmentDirections.actionFirstFragmentToDetailFragment(article, false)
+            findNavController().navigate(action)
+        }
+
+        binding.charecterRv.adapter = characterAdapter
+
         viewModel._breakingList.observe(viewLifecycleOwner) { charecter ->
-            adapter.submitList(charecter)
-            binding.charecterRv.adapter = adapter
+            characterAdapter.submitList(charecter)
+            binding.charecterRv.adapter = characterAdapter
             oldMyNotes = charecter
             binding.countryLoading.visibility = View.GONE
 
         }
+
         viewModel.countryLoading.observe(viewLifecycleOwner) {
             if (it) {
                 binding.countryLoading.visibility = View.VISIBLE
@@ -75,12 +85,10 @@ class FirstFragment : Fragment() {
                 newFilteredList.add(i)
             }
         }
-        adapter.submitList(newFilteredList)
+        characterAdapter.submitList(newFilteredList)
 
 
     }
-
-
 
 
 }

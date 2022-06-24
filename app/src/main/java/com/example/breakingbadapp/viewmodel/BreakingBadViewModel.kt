@@ -30,33 +30,26 @@ class BreakingBadViewModel @Inject constructor(
         }
     }
 
-    fun saveFavorite(character: CharacterModelItem) {
-        viewModelScope.launch {
-            characterDao.insert(character)
-            setIsFavoriteCharacter(character, true)
-        }
+    fun getFavoriteArticles() = characterDao.getCharacter()
 
-
+    fun addArticleToFavorites(character: CharacterModelItem) = viewModelScope.launch {
+        characterDao.insert(character)
     }
 
-    fun deleteFromFavorites(character: CharacterModelItem) {
-        viewModelScope.launch {
-            characterDao.delete(character)
-            setIsFavoriteCharacter(character, true)
-        }
-    }
+    fun removeArticleFromFavorites(character: CharacterModelItem) = viewModelScope.launch {
+        characterDao.delete(character)
 
 
-    private fun setIsFavoriteCharacter(character: CharacterModelItem, isFavorite: Boolean) {
-        _breakingList.value?.let {
-            // Check if its on Characters List
-            if (it.contains(character)) {
-                // Get Character and assign isFavorite
-                it[it.lastIndexOf(character)].isFavorite = isFavorite
-            }
-        }
     }
 }
+
+
+
+
+
+
+
+
 
 
 

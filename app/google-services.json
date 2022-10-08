@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "327723893396",
+    "project_id": "brakingbad-10cc3",
+    "storage_bucket": "brakingbad-10cc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327723893396:android:6b7cb9922aad1c4ba56a81",
+        "android_client_info": {
+          "package_name": "com.example.breakingbadapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327723893396-027qt4jp54l7o014efednnc1avn7gtmj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz5ptF7gXSLzIdH0fAeU_U61Xv-XJIYD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327723893396-027qt4jp54l7o014efednnc1avn7gtmj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

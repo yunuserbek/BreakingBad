@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.example.breakingbadapp.BreakingApiService
 import com.example.breakingbadapp.CharacterDao
+import com.example.breakingbadapp.common.AuthOperationsWrapper
 import com.example.breakingbadapp.utils.BASE_URL
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,4 +44,9 @@ object NetworkModule {
     fun provideDao(
         db: AppDatabase
     ): CharacterDao = db.characterDao()
+
+    @Provides
+    @Singleton
+    fun provideAuthOperationsWrapper(firebaseAuth: FirebaseAuth) =
+        AuthOperationsWrapper(firebaseAuth)
 }

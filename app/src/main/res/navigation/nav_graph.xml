@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.example.breakingbadapp.ui.FirstFragment"
         android:label="fragment_first"
+
         tools:layout="@layout/fragment_first" >
         <action
             android:id="@+id/action_firstFragment_to_detailFragment"
@@ -40,6 +41,27 @@
             />
 
 
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_auth"
+        android:id="@+id/authFragment"
+        android:name="com.example.breakingbadapp.ui.auth.AuthFragment"
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.breakingbadapp.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_authFragment"
+            app:destination="@id/authFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
     </fragment>
 
 </navigation>

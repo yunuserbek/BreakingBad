@@ -7,6 +7,8 @@ import com.example.breakingbadapp.CharacterDao
 import com.example.breakingbadapp.common.AuthOperationsWrapper
 import com.example.breakingbadapp.utils.BASE_URL
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -45,8 +47,5 @@ object NetworkModule {
         db: AppDatabase
     ): CharacterDao = db.characterDao()
 
-    @Provides
-    @Singleton
-    fun provideAuthOperationsWrapper(firebaseAuth: FirebaseAuth) =
-        AuthOperationsWrapper(firebaseAuth)
+
 }

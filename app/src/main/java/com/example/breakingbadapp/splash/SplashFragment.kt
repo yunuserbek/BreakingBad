@@ -1,23 +1,25 @@
 package com.example.breakingbadapp.splash
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat.animate
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.breakingbadapp.R
-import com.example.breakingbadapp.databinding.ActivityMainBinding.inflate
+import com.example.breakingbadapp.common.AuthOperationsWrapper
 import com.example.breakingbadapp.databinding.FragmentSplashBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 class SplashFragment : Fragment() {
     private lateinit var binding:FragmentSplashBinding
+    @Inject
+    lateinit var authOperations: AuthOperationsWrapper
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,15 +32,13 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         CoroutineScope(Dispatchers.Main).launch {
-          //  binding.logo.alpha =0f
-          //  animate().alpha(1f).duration = 2000
-          //  delay(2000)
+
             binding.logo.apply {
                 alpha = 0f
                 animate().alpha(1f).duration = 2500
-                delay(2000)
+                delay(3000)
             }
-            findNavController().navigate(R.id.action_splashFragment_to_firstFragment)
+            findNavController().navigate(R.id.action_splashFragment_to_authFragment)
         }
 
     }

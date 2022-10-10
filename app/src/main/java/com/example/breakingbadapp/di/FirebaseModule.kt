@@ -16,8 +16,13 @@ object FirebaseModule {
     @Provides
     @Singleton
     fun provideFirebaseUser() = Firebase.auth
+
     @Provides
     @Singleton
     fun provideAuthOperationsWrapper(firebaseAuth: FirebaseAuth) =
         AuthOperationsWrapper(firebaseAuth)
+
+
+
+
 }

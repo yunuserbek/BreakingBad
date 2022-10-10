@@ -54,6 +54,33 @@ class NativeProvidersFragment : Fragment() {
                     })
                 }
             }
+            btnPhone.setOnClickListener {
+                val phoneNumber = etPhoneNumber.text.toString()
+
+                if (phoneNumber.isNotEmpty()) {
+                    authOperationsWrapper.sendVerificationCode(phoneNumber, {
+                        Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
+                    }, {
+                      //  findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                        Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
+                    }, {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    })
+                }
+            }
+
+            btnVerifyCode.setOnClickListener {
+                val verifyCode = etVerifyCode.text.toString()
+
+                if (verifyCode.isNotEmpty()) {
+                    authOperationsWrapper.verifyCode(verifyCode, {
+                        findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                        Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
+                    }, {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                    })
+                }
+            }
         }
     }
 

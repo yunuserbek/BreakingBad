@@ -5,16 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.auth.NativeProvidersFragment">
-    <Button
-        android:id="@+id/btn_verify_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Verify Code"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_phone"
-        app:layout_constraintEnd_toEndOf="@+id/til_verify_code"
-        app:layout_constraintStart_toStartOf="@+id/til_verify_code"
-        app:layout_constraintTop_toTopOf="@+id/btn_phone" />
+
 
     <TextView
         android:id="@+id/textView2"

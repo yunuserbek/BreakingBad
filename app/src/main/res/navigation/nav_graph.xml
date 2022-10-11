@@ -14,6 +14,11 @@
             android:id="@+id/action_firstFragment_to_detailFragment"
             app:destination="@id/detailFragment"
             />
+        <action
+            android:id="@+id/action_firstFragment_to_authFragment"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/detailFragment"

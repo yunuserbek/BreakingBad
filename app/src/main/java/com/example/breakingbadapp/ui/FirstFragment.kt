@@ -1,24 +1,26 @@
 package com.example.breakingbadapp.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.breakingbadapp.BreakingBadAdapter
 import com.example.breakingbadapp.Model.CharacterModelItem
+import com.example.breakingbadapp.R
+import com.example.breakingbadapp.common.AuthOperationsWrapper
 import com.example.breakingbadapp.databinding.FragmentFirstBinding
 import com.example.breakingbadapp.viewmodel.BreakingBadViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class FirstFragment : Fragment() {
     //private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
     private lateinit var characterAdapter: BreakingBadAdapter
-
+    @Inject
+    lateinit var authOperationsWrapper: AuthOperationsWrapper
     private val viewModel: BreakingBadViewModel by viewModels()
     lateinit var binding: FragmentFirstBinding
 
@@ -35,6 +37,8 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setHasOptionsMenu(true)
         characterAdapter = BreakingBadAdapter { article ->
             val action =
                 FirstFragmentDirections.actionFirstFragmentToDetailFragment(article, false)
@@ -89,6 +93,23 @@ class FirstFragment : Fragment() {
 
 
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.signout, menu)
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+
+            R.id.singout_menu -> {
+                authOperationsWrapper.signOut()
+                findNavController().navigate(R.id.action_firstFragment_to_authFragment)
+                true
+            }
+            else -> {
+
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
 
 }

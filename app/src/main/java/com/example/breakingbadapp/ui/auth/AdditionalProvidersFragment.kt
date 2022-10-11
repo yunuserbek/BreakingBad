@@ -44,6 +44,19 @@ class AdditionalProvidersFragment : Fragment() {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             })
         }
+        binding.btnTwitter.setOnClickListener {
+
+            authOperationsWrapper.signInWithTwitter(requireActivity(),
+                onSuccess = {
+                    findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                    Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
+                },
+                onFailure = {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                })
+        }
+
+
 
        binding.btnGoogle.setOnClickListener {
 

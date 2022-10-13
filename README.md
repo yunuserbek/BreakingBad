@@ -1,7 +1,7 @@
 
 | Splash | Sign Up | Sign In |
 | ------ | ---- | ------ |
-|<img src="https://user-images.githubusercontent.com/29903779/183875046-0805f5da-3748-4555-9060-367a62a1e96c.jpg" width="225" height="500"/>|![SıgnUp](https://user-images.githubusercontent.com/88515816/195635914-1f10f83b-fae6-4a0d-8553-548c1a46a310.jpg)|![SignIn](https://user-images.githubusercontent.com/88515816/195635973-3aaaf71b-843d-4fbe-a450-f77a9fbe3500.jpg)|
+||![SıgnUp](https://user-images.githubusercontent.com/88515816/195635914-1f10f83b-fae6-4a0d-8553-548c1a46a310.jpg)|![SignIn](https://user-images.githubusercontent.com/88515816/195635973-3aaaf71b-843d-4fbe-a450-f77a9fbe3500.jpg)|
 
 </br>
 

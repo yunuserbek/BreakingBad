@@ -14,9 +14,9 @@ class AuthViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycl
 
     override fun createFragment(position: Int): Fragment {
         when (position) {
-            0 -> return NativeProvidersFragment()
-            1 -> return AdditionalProvidersFragment()
+            0 -> return SignUpFragment()
+            1 -> return SignInFragment()
         }
-        return NativeProvidersFragment()
+        return SignInFragment()
     }
 }

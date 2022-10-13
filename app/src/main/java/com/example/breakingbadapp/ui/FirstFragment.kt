@@ -101,7 +101,7 @@ class FirstFragment : Fragment() {
         return when (item.itemId) {
 
             R.id.singout_menu -> {
-                authOperationsWrapper.signOut()
+                viewModel.signOut()
                 findNavController().navigate(R.id.action_firstFragment_to_authFragment)
                 true
             }

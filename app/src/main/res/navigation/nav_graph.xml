@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/nativeProvidersFragment"
-        android:name="com.example.breakingbadapp.ui.auth.NativeProvidersFragment"
+        android:name="com.example.breakingbadapp.ui.auth.SignInFragment"
         android:label="NativeProvidersFragment" >
     </fragment>
 

@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.breakingbadapp.databinding.ActivityMainBinding
+import com.example.breakingbadapp.ui.auth.AuthFragment
 import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -31,16 +32,21 @@ class MainActivity : AppCompatActivity() {
                 R.id.firstFragment,R.id.favoriteFragment->{
                     binding.navView.visibility = View.VISIBLE
                 }
-                else ->{
+
+
+                R.id.splashFragment ->{
                     binding.navView.visibility = View.GONE
                     //supportActionBar?.hide()
                 }
 
+
+
             }
 
         }
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        if (supportFragmentManager.findFragmentById(R.id.splashFragment) is AuthFragment) {    supportActionBar?.hide() }
+
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.firstFragment, R.id.favoriteFragment

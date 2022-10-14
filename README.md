@@ -1,5 +1,5 @@
- -
- ## 🛠 Project Features
+
+  ## 🛠 Project Features
  
 - [MVVM with Clean Architecture](https://www.toptal.com/android/android-apps-mvvm-with-clean-architecture)
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)

@@ -1,3 +1,18 @@
+ -
+ ## 🛠 Project Features
+ 
+- [MVVM with Clean Architecture](https://www.toptal.com/android/android-apps-mvvm-with-clean-architecture)
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+- [Hilt for Dependency Injection](https://developer.android.com/training/dependency-injection/hilt-android)
+- [Navigation Component](https://developer.android.com/guide/navigation/navigation-getting-started)
+- [Firebase Auth](https://firebase.google.com/docs/auth)
+- [Room Database](https://developer.android.com/training/data-storage/room)
+- [Glide](https://github.com/bumptech/glide)
+- [Retrofit](https://square.github.io/retrofit)
+- [Coroutines](https://developer.android.com/kotlin/coroutines)
+- [Gson](https://github.com/google/gson)
+- [viewpager](https://developer.android.com/guide/navigation/navigation-swipe-view) 
+
 
 ## Screens
 | Splash | Sign Up | Sign In |

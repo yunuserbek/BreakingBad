@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceCategory app:title="genel">
+  <Preference
+      android:icon="@drawable/ic_back_24"
+      android:key="send_feed_back"
+      android:title="send_feedback"
+      app:icon="@drawable/ic_baseline_feedback_24"
+      />
+
+</PreferenceCategory>
+  <PreferenceCategory app:title="development">
+    <Preference
+        app:icon="@drawable/ic_baseline_person_24"
+        app:key="developer"
+        app:title="developer" />
+    <Preference
+        app:icon="@drawable/ic_baseline_code_24"
+        app:key="source_code"
+        app:title="source_code" />
+
+  </PreferenceCategory>
+</PreferenceScreen>

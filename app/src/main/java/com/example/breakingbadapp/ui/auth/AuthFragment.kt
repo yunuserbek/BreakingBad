@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.breakingbadapp.R
 import com.example.breakingbadapp.common.AuthOperationsWrapper
 import com.example.breakingbadapp.databinding.FragmentAuthBinding
+import com.example.breakingbadapp.viewmodel.AuthViewModel
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.material.tabs.TabLayoutMediator
@@ -19,8 +23,7 @@ import javax.inject.Inject
 class AuthFragment :Fragment() {
     private lateinit var binding: FragmentAuthBinding
     private lateinit var oneTapClient: SignInClient
-    @Inject
-    lateinit var authOperations: AuthOperationsWrapper
+    private val viewModel: AuthViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,12 +37,12 @@ class AuthFragment :Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         oneTapClient = Identity.getSignInClient(requireActivity())
-        /*
-        authOperations.checkCurrentUser {
+
+        viewModel.checkCurrentUser {
             findNavController().navigate(R.id.action_authFragment_to_firstFragment)
         }
 
-         */
+
        with(binding) {
            // val titleList = arrayListOf("Native provides","Additional Providers")
            viewPager.adapter = AuthViewPagerAdapter(childFragmentManager, lifecycle)

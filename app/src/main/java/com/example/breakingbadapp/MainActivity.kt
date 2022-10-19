@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener{_,destination,_->
             when(destination.id){
-                R.id.firstFragment,R.id.favoriteFragment->{
+                R.id.homeFragment,R.id.favoriteFragment->{
                     binding.navView.visibility = View.VISIBLE
                 }
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.firstFragment, R.id.favoriteFragment
+                R.id.homeFragment, R.id.favoriteFragment
             )
         )
 

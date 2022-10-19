@@ -46,7 +46,7 @@ class SignInFragment : Fragment() {
                 if (email.isNotEmpty() && password.isNotEmpty()) {
                     viewModel.signInWithEmailAndPassword(email, password, {
                         Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                        findNavController().navigate(R.id.action_authFragment_to_homeFragment)
 
                     }, {
                         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
@@ -56,7 +56,7 @@ class SignInFragment : Fragment() {
             binding.btnGithub.setOnClickListener {
 
                 viewModel.signInWithGithub(requireActivity(), {
-                    findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                    findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                     Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
                 }, {
                     Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
@@ -68,7 +68,7 @@ class SignInFragment : Fragment() {
 
             viewModel.signInWithTwitter(requireActivity(),
                 onSuccess = {
-                    findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                    findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                     Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
                 },
                 onFailure = {
@@ -94,7 +94,7 @@ class SignInFragment : Fragment() {
                 val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
                 val idToken = credential.googleIdToken
                 idToken?.let {
-                    findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                    findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                 }
             }
 

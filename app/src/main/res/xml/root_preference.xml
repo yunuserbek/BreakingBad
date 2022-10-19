@@ -19,6 +19,15 @@
         app:icon="@drawable/ic_baseline_code_24"
         app:key="source_code"
         app:title="source_code" />
+    androidx.preference.PreferenceCategory
+    android:key="interface_prefs"
+    android:title="@string/interface_title">
+
+
+
+
+
+
 
   </PreferenceCategory>
 </PreferenceScreen>

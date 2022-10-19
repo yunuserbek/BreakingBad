@@ -39,7 +39,7 @@ class AuthFragment :Fragment() {
         oneTapClient = Identity.getSignInClient(requireActivity())
 
         viewModel.checkCurrentUser {
-            findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+            findNavController().navigate(R.id.action_authFragment_to_homeFragment)
         }
 
 

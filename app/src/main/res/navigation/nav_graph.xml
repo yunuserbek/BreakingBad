@@ -7,12 +7,12 @@
     app:startDestination="@id/splashFragment">
 
     <fragment
-        android:id="@+id/firstFragment"
-        android:name="com.example.breakingbadapp.ui.FirstFragment"
+        android:id="@+id/homeFragment"
+        android:name="com.example.breakingbadapp.ui.HomeFragment"
         android:label="fragment_first"
         tools:layout="@layout/fragment_first" >
         <action
-            android:id="@+id/action_firstFragment_to_detailFragment"
+            android:id="@+id/firstFragment_to_detailFragment"
             app:destination="@id/detailFragment"
             />
         <action
@@ -58,12 +58,15 @@
         android:name="com.example.breakingbadapp.ui.auth.AuthFragment"
         android:label="AuthFragment" >
         <action
-            android:id="@+id/action_authFragment_to_firstFragment"
-            app:destination="@id/firstFragment"
+            android:id="@+id/action_authFragment_to_homefragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true"
 
             />
+        <action
+            android:id="@+id/action_authFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
 
     </fragment>
     <fragment
@@ -77,7 +80,7 @@
             app:popUpTo="@id/nav_graph" />
         <action
             android:id="@+id/action_splashFragment_to_firstFragment"
-            app:destination="@id/firstFragment"
+            app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph" />
 
 

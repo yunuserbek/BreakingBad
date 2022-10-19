@@ -35,6 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
 
 
+
     }
     private fun openUrl(url: String) {
         val viewIntent = Intent(

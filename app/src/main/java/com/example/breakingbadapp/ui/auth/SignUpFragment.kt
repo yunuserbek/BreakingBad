@@ -45,7 +45,7 @@ class SignUpFragment : Fragment() {
                     viewModel.signUpWithEmailAndPassword(email, password, {
                         //   findNavController().navigate(R.id.)
                         Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                        findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                     }, {
                         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
 
@@ -55,7 +55,7 @@ class SignUpFragment : Fragment() {
         binding.btnGithub.setOnClickListener {
 
             viewModel.signInWithGithub(requireActivity(), {
-                findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                 Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
             }, {
                 Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
@@ -65,7 +65,7 @@ class SignUpFragment : Fragment() {
 
             viewModel.signInWithTwitter(requireActivity(),
                 onSuccess = {
-                    findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                    findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                     Toast.makeText(requireContext(), "successful", Toast.LENGTH_SHORT).show()
                 },
                 onFailure = {
@@ -91,7 +91,7 @@ class SignUpFragment : Fragment() {
                 val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
                 val idToken = credential.googleIdToken
                 idToken?.let {
-                    findNavController().navigate(R.id.action_authFragment_to_firstFragment)
+                    findNavController().navigate(R.id.action_authFragment_to_homeFragment)
                 }
             }
 

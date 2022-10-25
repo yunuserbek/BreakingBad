@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.erkutaras.statelayout.StateLayout
 import com.example.breakingbadapp.adapter.BreakingBadAdapter
 import com.example.breakingbadapp.databinding.FragmentFavoriteBinding
 import com.example.breakingbadapp.viewmodel.BreakingBadViewModel
@@ -16,6 +17,7 @@ import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
+import io.grpc.InternalChannelz.id
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
@@ -54,9 +56,23 @@ class FavoriteFragment : Fragment() {
 
 
         viewModel.getFavoriteArticles().observe(viewLifecycleOwner) { character ->
+
             characterAdapter.submitList(character)
             binding.charecterRv.adapter = characterAdapter
+            if (character.isEmpty()) {
+                binding.stateLayout.showEmpty(
+                    StateLayout.StateInfo(
+                        infoTitle = "nothing added to favorite",
+                        infoMessage = "go to home page to add to favorite", onInfoButtonClick = {
+                        }
 
+                    )
+                )
+            } else {
+                binding.stateLayout.content()
+                characterAdapter.submitList(character)
+                binding.charecterRv.adapter = characterAdapter
+            }
 
         }
 
@@ -88,6 +104,7 @@ class FavoriteFragment : Fragment() {
                     Log.d(TAG, adError?.toString())
                     mInterstitialAd = null
                 }
+
                 override fun onAdLoaded(interstitialAd: InterstitialAd) {
                     Log.d(TAG, "Ad was loaded.")
                     mInterstitialAd = interstitialAd
@@ -98,6 +115,7 @@ class FavoriteFragment : Fragment() {
                 // Called when a click is recorded for an ad.
                 Log.d(TAG, "Ad was clicked.")
             }
+
             override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                 // Called when ad fails to show.
                 Log.e(TAG, "Ad failed to show fullscreen content.")
@@ -108,6 +126,7 @@ class FavoriteFragment : Fragment() {
             mInterstitialAd?.show(requireActivity())
         }
     }
+
 
 
 }

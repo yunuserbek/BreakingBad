@@ -31,12 +31,13 @@ class MainActivity : AppCompatActivity() {
             when(destination.id){
                 R.id.homeFragment,R.id.favoriteFragment->{
                     binding.navView.visibility = View.VISIBLE
+                    supportActionBar?.show()
                 }
 
 
                 R.id.splashFragment ->{
                     binding.navView.visibility = View.GONE
-                    //supportActionBar?.hide()
+                    supportActionBar?.hide()
                 }
 
 
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.homeFragment, R.id.favoriteFragment
+                R.id.homeFragment, R.id.favoriteFragment,R.id.navigation_settings
             )
         )
 

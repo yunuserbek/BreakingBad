@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.breakingbadapp.ui.HomeFragment"
+        android:name="com.example.breakingbadapp.ui.home.HomeFragment"
         android:label="fragment_first"
         tools:layout="@layout/fragment_first" >
         <action
@@ -23,13 +23,13 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.breakingbadapp.ui.DetailFragment"
+        android:name="com.example.breakingbadapp.ui.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
 
             android:name="charecter"
-            app:argType="com.example.breakingbadapp.Model.CharacterModelItem" />
+            app:argType="com.example.breakingbadapp.domain.model.CharacterModelItem" />
         <argument
             android:name="favorite"
             app:argType="boolean"
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.example.breakingbadapp.ui.FavoriteFragment"
+        android:name="com.example.breakingbadapp.ui.favorite.FavoriteFragment"
         android:label="Favorite"
         tools:layout="@layout/fragment_favorite" >
         <action
@@ -46,12 +46,8 @@
             app:destination="@id/detailFragment"
             />
 
-        <fragment
-            android:id="@+id/navigation_settings"
-            android:name="com.yonder.weightly.ui.settings.SettingsFragment"
-            android:label="settings"
-            tools:layout="@layout/fragment_settings" />
     </fragment>
+
     <fragment
         tools:layout="@layout/fragment_auth"
         android:id="@+id/authFragment"
@@ -71,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.example.breakingbadapp.splash.SplashFragment"
+        android:name="com.example.breakingbadapp.ui.splash.SplashFragment"
         android:label="splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -90,14 +86,14 @@
         android:name="com.example.breakingbadapp.ui.auth.SignInFragment"
         android:label="NativeProvidersFragment" >
     </fragment>
+
     <fragment
         tools:layout="@layout/fragment_settings"
         android:id="@+id/navigation_settings"
-        android:name="com.example.breakingbadapp.ui.SettingsFragment"
+        android:name="com.example.breakingbadapp.ui.settings.SettingsFragment"
         android:label="SettingsFragment" >
         <action
             android:id="@+id/action_navigation_settings_to_splashFragment"
             app:destination="@id/splashFragment" />
     </fragment>
-
 </navigation>

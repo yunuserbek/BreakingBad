@@ -1,11 +1,11 @@
-package com.example.breakingbadapp.Model
+package com.example.breakingbadapp.domain.model
 
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "character_model")

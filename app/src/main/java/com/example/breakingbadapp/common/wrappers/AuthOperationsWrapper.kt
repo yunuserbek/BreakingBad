@@ -1,28 +1,47 @@
-package com.example.breakingbadapp.viewmodel
+package com.example.breakingbadapp.common.wrappers
 
 import android.app.Activity
 import android.content.IntentSender
 import androidx.activity.result.IntentSenderRequest
-import androidx.lifecycle.ViewModel
+import com.example.breakingbadapp.R
+import com.example.breakingbadapp.common.util.ResourcesProvider
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.OAuthProvider
-import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-@HiltViewModel
-class AuthViewModel@Inject constructor(private val firebaseAuth: FirebaseAuth) :ViewModel(){
+
+class AuthOperationsWrapper @Inject constructor(
+    private val resourcesProvider: ResourcesProvider,
+    private val firebaseAuth: FirebaseAuth
+    ) {
+    fun signUpWithEmailAndPassword(
+        email: String,
+        password: String,
+        onSuccess: (FirebaseUser) -> Unit = {},
+        onFailure: (String) -> Unit = {}
+    ) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener { authResult ->
+                authResult.user?.let {
+                    onSuccess(it)
+                }
+            }.addOnFailureListener {
+                onFailure(it.message.orEmpty())
+            }
+    }
+
     fun signInWithEmailAndPassword(
         email: String,
         password: String,
-        onSuccess: () -> Unit = {},
+        onSuccess: (FirebaseUser) -> Unit = {},
         onFailure: (String) -> Unit = {}
     ) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener { authResult ->
                 authResult.user?.let {
-                    onSuccess()
+                    onSuccess(it)
                 }
             }.addOnFailureListener {
                 onFailure(it.message.orEmpty())
@@ -30,7 +49,9 @@ class AuthViewModel@Inject constructor(private val firebaseAuth: FirebaseAuth) :
     }
 
     fun signInWithGithub(
-        activity: Activity, onSuccess: () -> Unit = {}, onFailure: (String) -> Unit = {}
+        activity: Activity,
+        onSuccess: (FirebaseUser) -> Unit = {},
+        onFailure: (String) -> Unit = {}
     ) {
         val provider = OAuthProvider.newBuilder("github.com")
         provider.addCustomParameter("login", "")
@@ -38,14 +59,17 @@ class AuthViewModel@Inject constructor(private val firebaseAuth: FirebaseAuth) :
         firebaseAuth.startActivityForSignInWithProvider(activity, provider.build())
             .addOnSuccessListener { authResult ->
                 authResult.user?.let {
-                    onSuccess()
+                    onSuccess(it)
                 }
             }.addOnFailureListener {
                 onFailure(it.message.orEmpty())
             }
     }
+
     fun signInWithTwitter(
-        activity: Activity, onSuccess: () -> Unit, onFailure: (String) -> Unit
+        activity: Activity,
+        onSuccess: (FirebaseUser) -> Unit,
+        onFailure: (String) -> Unit
     ) {
         val provider = OAuthProvider.newBuilder("twitter.com")
         provider.addCustomParameter("lang", "")
@@ -53,7 +77,7 @@ class AuthViewModel@Inject constructor(private val firebaseAuth: FirebaseAuth) :
         firebaseAuth.startActivityForSignInWithProvider(activity, provider.build())
             .addOnSuccessListener { authResult ->
                 authResult.user?.let {
-                    onSuccess()
+                    onSuccess(it)
                 }
             }.addOnFailureListener {
                 onFailure(it.message.orEmpty())
@@ -66,10 +90,9 @@ class AuthViewModel@Inject constructor(private val firebaseAuth: FirebaseAuth) :
         onSuccess: (IntentSenderRequest) -> Unit = {},
         onFailure: (String) -> Unit = {}
     ) {
-
         val signInRequest = BeginSignInRequest.builder().setGoogleIdTokenRequestOptions(
             BeginSignInRequest.GoogleIdTokenRequestOptions.builder().setSupported(true)
-                .setServerClientId("327723893396-027qt4jp54l7o014efednnc1avn7gtmj.apps.googleusercontent.com")
+                .setServerClientId(resourcesProvider.getString(R.string.default_web_client_id))
                 .setFilterByAuthorizedAccounts(false).build()
         ).build()
 
@@ -86,28 +109,6 @@ class AuthViewModel@Inject constructor(private val firebaseAuth: FirebaseAuth) :
         }
     }
 
-    fun signUpWithEmailAndPassword(
-        email: String,
-        password: String,
-        onSuccess: () -> Unit = {},
-        onFailure: (String) -> Unit = {}
-    ) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener { authResult ->
-                authResult.user?.let {
-                    onSuccess()
-                }
-            }.addOnFailureListener {
-                onFailure(it.message.orEmpty())
-            }
-    }
-
-
-
-
-    fun checkCurrentUser(currentUser: (FirebaseUser) -> Unit = {}) {
-        firebaseAuth.currentUser?.let {
-            currentUser(it)
-        }
-    }
+    fun checkCurrentUser() : Boolean =
+        firebaseAuth.currentUser != null
 }

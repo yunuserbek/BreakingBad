@@ -1,4 +1,4 @@
-package com.example.breakingbadapp.ui
+package com.example.breakingbadapp.ui.favorite
 
 import android.os.Bundle
 import android.util.Log
@@ -10,23 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.erkutaras.statelayout.StateLayout
-import com.example.breakingbadapp.adapter.BreakingBadAdapter
+import com.example.breakingbadapp.ui.adapter.BreakingBadAdapter
 import com.example.breakingbadapp.databinding.FragmentFavoriteBinding
 import com.example.breakingbadapp.viewmodel.BreakingBadViewModel
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import dagger.hilt.android.AndroidEntryPoint
-import io.grpc.InternalChannelz.id
+import com.example.breakingbadapp.R
+
 
 @AndroidEntryPoint
 class FavoriteFragment : Fragment() {
-
-
     private lateinit var binding: FragmentFavoriteBinding
     private val viewModel: BreakingBadViewModel by viewModels()
     private var mInterstitialAd: InterstitialAd? = null
-    private final var TAG = "MainActivity"
+    private val TAG = "MainActivity"
 
     // private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
     private lateinit var characterAdapter: BreakingBadAdapter
@@ -34,7 +33,7 @@ class FavoriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentFavoriteBinding.inflate(layoutInflater)
         return binding.root
@@ -46,10 +45,12 @@ class FavoriteFragment : Fragment() {
         bannerAds()
         characterAdapter = BreakingBadAdapter { article ->
             val action =
-                FavoriteFragmentDirections
-                    .actionNavigationFavoritesToNavigationDetail(article, true)
+                FavoriteFragmentDirections.actionNavigationFavoritesToNavigationDetail(
+                    article,
+                    true
+                )
             findNavController().navigate(action)
-            InterstitialAd()
+            interstitialAd()
 
         }
         binding.charecterRv.adapter = characterAdapter
@@ -62,10 +63,9 @@ class FavoriteFragment : Fragment() {
             if (character.isEmpty()) {
                 binding.stateLayout.showEmpty(
                     StateLayout.StateInfo(
+                        infoImage = R.drawable.ic_search,
                         infoTitle = "nothing added to favorite",
-                        infoMessage = "go to home page to add to favorite", onInfoButtonClick = {
-                        }
-
+                        infoMessage = "go to home page to add to favorite"
                     )
                 )
             } else {
@@ -75,11 +75,9 @@ class FavoriteFragment : Fragment() {
             }
 
         }
-
-
     }
 
-    fun bannerAds() {
+    private fun bannerAds() {
         MobileAds.initialize(requireContext())
         val adView = AdView(requireContext())
         adView.adUnitId = "ca-app-pub-3940256099942544/6300978111"
@@ -93,15 +91,15 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-    private fun InterstitialAd() {
-        var adRequest = AdRequest.Builder().build()
+    private fun interstitialAd() {
+        val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             requireContext(),
             "ca-app-pub-3940256099942544/1033173712",
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
-                    Log.d(TAG, adError?.toString())
+                    adError.toString().let { Log.d(TAG, it) }
                     mInterstitialAd = null
                 }
 

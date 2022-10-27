@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".splash.SplashFragment"
+    tools:context=".ui.splash.SplashFragment"
    >
 
     <ImageView
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:src="@drawable/breakinglogo"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toTopOf="@+id/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Breaking Bad"
+        android:text="@string/breaking_bad"
         android:textColor="#8BC34A"
         android:textSize="52sp"
         android:textStyle="bold"

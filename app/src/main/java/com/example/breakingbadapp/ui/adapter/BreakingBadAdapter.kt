@@ -1,4 +1,4 @@
-package com.example.breakingbadapp.adapter
+package com.example.breakingbadapp.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.breakingbadapp.Model.CharacterModelItem
+import com.example.breakingbadapp.domain.model.CharacterModelItem
 import com.example.breakingbadapp.databinding.CharecterItemBinding
 import com.example.breakingbadapp.databinding.NativeAdLayoutBinding
-import com.example.breakingbadapp.enum
+import com.example.breakingbadapp.domain.model.Item
 import com.google.android.gms.ads.nativead.NativeAd
 
 
@@ -22,7 +22,7 @@ class BreakingBadAdapter(private val onItemClicked: (CharacterModelItem) -> Unit
     private var nativeAd: NativeAd? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            enum.ITEM_NATIVE_ADS -> {
+            Item.ITEM_NATIVE_ADS -> {
                 NativeAdsViewHolder(
                     NativeAdLayoutBinding.inflate(
                         LayoutInflater.from(parent.context),
@@ -88,7 +88,7 @@ class BreakingBadAdapter(private val onItemClicked: (CharacterModelItem) -> Unit
                     nativeAdView.starRatingView = adStars
                     nativeAdView.storeView = adStore
                     nativeAdView.advertiserView = adAdvertiser
-                    nativeAdView.mediaView?.setMediaContent(it.mediaContent!!)
+                    nativeAdView.mediaView?.mediaContent = it.mediaContent!!
                     nativeAdView.mediaView?.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
                     (nativeAdView.headlineView as TextView).text = it.headline
                     (nativeAdView.bodyView as TextView).text = it.body
@@ -106,8 +106,8 @@ class BreakingBadAdapter(private val onItemClicked: (CharacterModelItem) -> Unit
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            null -> enum.ITEM_NATIVE_ADS
-            else -> enum.ITEM_TODO
+            null -> Item.ITEM_NATIVE_ADS
+            else -> Item.ITEM_TODO
         }
     }
 

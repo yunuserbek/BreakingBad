@@ -2,13 +2,12 @@ package com.example.breakingbadapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.breakingbadapp.BreakingApiService
-import com.example.breakingbadapp.CharacterDao
-import com.example.breakingbadapp.common.AuthOperationsWrapper
-import com.example.breakingbadapp.utils.BASE_URL
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.example.breakingbadapp.data.remote.BreakingApiService
+import com.example.breakingbadapp.data.network.CharacterDao
+import com.example.breakingbadapp.data.network.AppDatabase
+import com.example.breakingbadapp.common.utils.BASE_URL
+import com.example.breakingbadapp.data.repository.CharacterRepositoryImpl
+import com.example.breakingbadapp.domain.repository.CharacterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,7 +30,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun apiFactory(retrofit: Retrofit) = retrofit.create(BreakingApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): BreakingApiService = retrofit.create(BreakingApiService::class.java)
 
     @Provides
     @Singleton
@@ -47,5 +46,12 @@ object NetworkModule {
         db: AppDatabase
     ): CharacterDao = db.characterDao()
 
+    @Provides
+    @Singleton
+    fun provideCharacterRepository(
+        characterDao: CharacterDao
+    ) : CharacterRepository = CharacterRepositoryImpl(
+        characterDao = characterDao
+    )
 
 }

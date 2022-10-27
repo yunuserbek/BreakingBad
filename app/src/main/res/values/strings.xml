@@ -2,4 +2,6 @@
     <string name="app_name">breaking bad App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="signout">signOut</string>
+    <string name="breaking_bad">Breaking Bad</string>
 </resources>

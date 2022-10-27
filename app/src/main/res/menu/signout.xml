@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/singout_menu"
+        android:id="@+id/signout_menu"
         android:icon="@drawable/ic_baseline_exit_to_app_24"
         app:showAsAction="always"
-        android:title="signOut" />
+        android:title="@string/signout" />
 </menu>

@@ -1,14 +1,12 @@
 package com.example.breakingbadapp.viewmodel
 
-import android.app.Activity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.breakingbadapp.BreakingApiService
-import com.example.breakingbadapp.CharacterDao
-import com.example.breakingbadapp.Model.CharacterModelItem
+import com.example.breakingbadapp.data.remote.BreakingApiService
+import com.example.breakingbadapp.domain.model.CharacterModelItem
+import com.example.breakingbadapp.domain.repository.CharacterRepository
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.OAuthProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,17 +15,15 @@ import javax.inject.Inject
 class BreakingBadViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val apiService: BreakingApiService,
-    private val characterDao: CharacterDao,
+    private val repo: CharacterRepository
+    ) : ViewModel() {
 
-) : ViewModel() {
     val _breakingList = MutableLiveData<List<CharacterModelItem>>()
     val countryLoading = MutableLiveData<Boolean>()
 
-    init {
-        getData()
-    }
+    init { getData() }
 
-    fun getData() {
+    private fun getData() {
         countryLoading.value = true
         viewModelScope.launch {
             _breakingList.value = apiService.allBrakingBad()
@@ -35,18 +31,17 @@ class BreakingBadViewModel @Inject constructor(
         }
     }
 
-    fun getFavoriteArticles() = characterDao.getCharacter()
+    fun getFavoriteArticles() = repo.getCharacters()
 
     fun addArticleToFavorites(character: CharacterModelItem) = viewModelScope.launch {
-        characterDao.insert(character)
+        repo.insertCharacter(character)
     }
 
     fun removeArticleFromFavorites(character: CharacterModelItem) = viewModelScope.launch {
-        characterDao.delete(character)
+        repo.deleteCharacter(character)
     }
     fun signOut() {
         firebaseAuth.signOut()
-
     }
 
 }

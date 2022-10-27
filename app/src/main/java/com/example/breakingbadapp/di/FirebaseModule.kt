@@ -1,6 +1,7 @@
 package com.example.breakingbadapp.di
 
-import com.example.breakingbadapp.common.AuthOperationsWrapper
+import com.example.breakingbadapp.common.util.ResourcesProvider
+import com.example.breakingbadapp.common.wrappers.AuthOperationsWrapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -19,10 +20,6 @@ object FirebaseModule {
 
     @Provides
     @Singleton
-    fun provideAuthOperationsWrapper(firebaseAuth: FirebaseAuth) =
-        AuthOperationsWrapper(firebaseAuth)
-
-
-
-
+    fun provideAuthOperationsWrapper(resourceProvider: ResourcesProvider, firebaseAuth: FirebaseAuth) =
+        AuthOperationsWrapper(resourceProvider, firebaseAuth)
 }

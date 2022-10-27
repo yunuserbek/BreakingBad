@@ -1,9 +1,8 @@
-package com.example.breakingbadapp.di
+package com.example.breakingbadapp.data.network
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.breakingbadapp.CharacterDao
-import com.example.breakingbadapp.Model.CharacterModelItem
+import com.example.breakingbadapp.domain.model.CharacterModelItem
 
 @Database(
     entities = [CharacterModelItem::class],

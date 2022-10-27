@@ -1,4 +1,4 @@
-package com.example.breakingbadapp
+package com.example.breakingbadapp.common
 
 object utils {
     const val BASE_URL ="https://www.breakingbadapi.com/api/"

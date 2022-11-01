@@ -8,6 +8,8 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.breakingbadapp.ui.adapter.BreakingBadAdapter
 import com.example.breakingbadapp.domain.model.CharacterModelItem
@@ -21,6 +23,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.nativead.NativeAd
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,20 +61,8 @@ class HomeFragment : Fragment(), MenuProvider {
 
         binding.charecterRv.adapter = characterAdapter
 
-        viewModel._breakingList.observe(viewLifecycleOwner) { character ->
-            loadNativeAds(onLoadedAd = {
-                characterAdapter.setNativeAds(it)
-                characterAdapter.submitList(addNullToArray(character))
-                binding.charecterRv.adapter = characterAdapter
-                oldMyNotes = character
-                binding.countryLoading.visibility = View.GONE
-            }, onAdFailedToLoad = {
-                characterAdapter.submitList(character)
 
-            })
-        }
-
-        viewModel.countryLoading.observe(viewLifecycleOwner) {
+        viewModel.characterLoading.observe(viewLifecycleOwner) {
             if (it) {
                 binding.countryLoading.visibility = View.VISIBLE
             } else {
@@ -88,6 +79,25 @@ class HomeFragment : Fragment(), MenuProvider {
                 return true
             }
         })
+
+        initObservers()
+    }
+
+    private fun initObservers() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.characterList.collect { character ->
+                loadNativeAds(onLoadedAd = {
+                    characterAdapter.setNativeAds(it)
+                    characterAdapter.submitList(addNullToArray(character))
+                    binding.charecterRv.adapter = characterAdapter
+                    oldMyNotes = character
+                    binding.countryLoading.visibility = View.GONE
+                }, onAdFailedToLoad = {
+                    characterAdapter.submitList(character)
+
+                })
+            }
+        }
     }
 
     private fun filterSearch(newText: String?) {

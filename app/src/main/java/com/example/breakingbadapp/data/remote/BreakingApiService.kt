@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface BreakingApiService {
     @GET(END_POINT)
-    suspend fun allBrakingBad():List<CharacterModelItem>
+    suspend fun getCharacters() : List<CharacterModelItem>
 }

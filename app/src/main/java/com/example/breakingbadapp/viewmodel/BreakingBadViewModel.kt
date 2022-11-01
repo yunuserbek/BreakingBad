@@ -3,31 +3,48 @@ package com.example.breakingbadapp.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.breakingbadapp.common.Resource
 import com.example.breakingbadapp.data.remote.BreakingApiService
 import com.example.breakingbadapp.domain.model.CharacterModelItem
+import com.example.breakingbadapp.domain.repository.BreakingBadApiRepository
 import com.example.breakingbadapp.domain.repository.CharacterRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BreakingBadViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val apiService: BreakingApiService,
-    private val repo: CharacterRepository
+    private val repo: CharacterRepository,
+    private val breakingBadApiRepository: BreakingBadApiRepository
     ) : ViewModel() {
 
-    val _breakingList = MutableLiveData<List<CharacterModelItem>>()
-    val countryLoading = MutableLiveData<Boolean>()
+    private val characterListState = MutableStateFlow<List<CharacterModelItem>>(emptyList())
+    val characterList = characterListState.asStateFlow()
+    val characterLoading = MutableLiveData<Boolean>()
 
     init { getData() }
 
     private fun getData() {
-        countryLoading.value = true
+        characterLoading.value = true
         viewModelScope.launch {
-            _breakingList.value = apiService.allBrakingBad()
-            countryLoading.value = false
+            breakingBadApiRepository.getCharacters().collect { result ->
+                when (result) {
+                    is Resource.Success -> {
+                        characterLoading.value = false
+                        characterListState.value = result.data
+                    }
+                    is Resource.Loading -> {
+                        characterLoading.value = true
+                    }
+                    is Resource.Error -> {
+                        // Network listener..
+                    }
+                }
+            }
         }
     }
 

@@ -27,8 +27,7 @@ class FavoriteFragment : Fragment() {
     private var mInterstitialAd: InterstitialAd? = null
     private val TAG = "MainActivity"
 
-    // private val adapter: BreakingBadAdapter by lazy { BreakingBadAdapter() }
-    private lateinit var characterAdapter: BreakingBadAdapter
+    private val characterAdapter by lazy { BreakingBadAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +42,7 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bannerAds()
-        characterAdapter = BreakingBadAdapter { article ->
+        characterAdapter.onItemClicked = { article ->
             val action =
                 FavoriteFragmentDirections.actionNavigationFavoritesToNavigationDetail(
                     article,

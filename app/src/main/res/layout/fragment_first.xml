@@ -18,8 +18,9 @@
         android:layout_marginTop="50dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
     <ProgressBar
-        android:id="@+id/countryLoading"
+        android:id="@+id/charactersLoading"
         android:layout_width="wrap_content"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

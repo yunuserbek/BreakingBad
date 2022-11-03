@@ -29,6 +29,6 @@ object ApiServiceModule {
 
     @Singleton
     @Provides
-    fun provideApiRespository(apiService: BreakingApiService) : BreakingBadApiRepository =
+    fun provideApiRepository(apiService: BreakingApiService) : BreakingBadApiRepository =
         BreakingBadApiRepositoryImpl(apiService)
 }

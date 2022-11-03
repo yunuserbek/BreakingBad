@@ -17,8 +17,10 @@ import com.example.breakingbadapp.domain.model.Item
 import com.google.android.gms.ads.nativead.NativeAd
 
 
-class BreakingBadAdapter(private val onItemClicked: (CharacterModelItem) -> Unit) :
+class BreakingBadAdapter() :
     ListAdapter<CharacterModelItem, RecyclerView.ViewHolder>(DiffCallback) {
+
+    var onItemClicked: (CharacterModelItem) -> Unit = {  }
     private var nativeAd: NativeAd? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -116,6 +118,8 @@ class BreakingBadAdapter(private val onItemClicked: (CharacterModelItem) -> Unit
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<CharacterModelItem>() {
+
+
         override fun areItemsTheSame(oldItem: CharacterModelItem, newItem: CharacterModelItem) =
             oldItem.id == newItem.id
 

@@ -4,10 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.breakingbadapp.common.Resource
-import com.example.breakingbadapp.data.remote.BreakingApiService
+import com.example.breakingbadapp.common.wrappers.AdsOperationsWrapper
 import com.example.breakingbadapp.domain.model.CharacterModelItem
 import com.example.breakingbadapp.domain.repository.BreakingBadApiRepository
 import com.example.breakingbadapp.domain.repository.CharacterRepository
+import com.google.android.gms.ads.nativead.NativeAd
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class BreakingBadViewModel @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
     private val repo: CharacterRepository,
-    private val breakingBadApiRepository: BreakingBadApiRepository
+    private val breakingBadApiRepository: BreakingBadApiRepository,
+    private val adsOperationsWrapper: AdsOperationsWrapper
     ) : ViewModel() {
 
     private val characterListState = MutableStateFlow<List<CharacterModelItem>>(emptyList())
@@ -29,12 +31,10 @@ class BreakingBadViewModel @Inject constructor(
     init { getData() }
 
     private fun getData() {
-        characterLoading.value = true
         viewModelScope.launch {
             breakingBadApiRepository.getCharacters().collect { result ->
                 when (result) {
                     is Resource.Success -> {
-                        characterLoading.value = false
                         characterListState.value = result.data
                     }
                     is Resource.Loading -> {
@@ -46,6 +46,21 @@ class BreakingBadViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+     fun loadNativeAds(
+         onLoadedAd: (NativeAd) -> Unit,
+         onAdFailedToLoad: (String) -> Unit
+     ) = viewModelScope.launch {
+        adsOperationsWrapper.loadNativeAds(
+            { nativeAd ->
+                characterLoading.postValue(false)
+                onLoadedAd(nativeAd)
+            },
+            { msg ->
+                onAdFailedToLoad(msg)
+            }
+        )
     }
 
     fun getFavoriteArticles() = repo.getCharacters()
